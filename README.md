@@ -1,6 +1,5 @@
 ## Covid risk
 
-<!DOCTYPE html>
 <html>
 <head>
   <style>
