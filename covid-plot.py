@@ -1,40 +1,26 @@
 import altair as alt
+import pandas as pd
 fips_of_interest = [53033, 53, 0]
 # fips_of_interest = [38105, 38, 0]
 
+df = pd.read_csv('./data/rolling-14-day-sum.csv')
+
 data = df[df['fips'].isin(fips_of_interest)]
 
-line_county = alt.Chart(height=250, width=250).mark_line().encode(
-    x='date',
+line_county = alt.Chart(data, height=250, width=250).mark_line().encode(
+    x='date:T',
     y=alt.Y(
-        'roll_cases_pcap',
+        'roll_cases_pcap:Q',
+        # 'cases:Q',
         title='Positive COVID test rate within 14 days',
     ),
-#     b='cases_pcap',
-#     y2='new_cases_pcap',
-    tooltip='date',
+    tooltip='date:T',
     color=alt.Color(
-        'label',
+        'label:N',
         title='Region',
     ),
-)
-bar = alt.Chart().mark_bar(opacity=0.7).encode(
-    x='date',
-    y=alt.Y(
-        'new_cases_pcap',
-        stack=False,
-    ),
-    tooltip='new_cases_pcap',
-    color='label'
-)
-test_rate = alt.layer(
-    line_county,
-    bar,
-    data=data,
-).properties(
-    title=''
-).facet(
-    'label'
 ).interactive()
 
-test_rate.save('chart.html')
+
+line_county.save('chart.json')
+line_county.save('chart.html')

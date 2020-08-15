@@ -119,7 +119,9 @@ df = pd.concat([df, df_diff], axis=1)
 
 rolling_window=14
 
-df_roll = df.groupby('fips')[['new_cases', 'new_deaths']].sum().rolling(rolling_window).sum().fillna(0).astype('int64').reset_index(0, drop=True)
+df_roll = df[['fips', 'new_cases', 'new_deaths']].groupby('fips')[['new_cases', 'new_deaths']].rolling(rolling_window).sum().fillna(0).astype('int64').reset_index(0, drop=True)
+
+# df_roll = df_roll.rolling(rolling_window).sum().fillna(0).astype('int64').reset_index(0, drop=True)
 
 
 df_roll.rename(columns={'new_cases':'roll_cases', 'new_deaths':'roll_deaths'}, inplace=True)
@@ -140,7 +142,7 @@ df['cases_min_pcap'] = df['cases_min']/df['population']
 df['cases_max_pcap'] = df['cases_max']/df['population']
 
 # reduce down to rolling average
-df_out = df[['date', 'county', 'state', 'fips', 'cases', 'deaths', 'roll_cases_pcap']]
+df_out = df[['date', 'label', 'county', 'state', 'fips', 'cases', 'deaths', 'roll_cases_pcap']]
 
 df_out.to_csv('./data/rolling-14-day-sum.csv', index=False)
 
