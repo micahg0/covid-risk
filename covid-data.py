@@ -139,5 +139,8 @@ df['roll_deaths_pcap'] = df['roll_deaths']/df['population']
 df['cases_min_pcap'] = df['cases_min']/df['population']
 df['cases_max_pcap'] = df['cases_max']/df['population']
 
-df.to_csv('./data/data.csv', index=False)
+# reduce down to rolling average
+df_out = df[['date', 'county', 'state', 'fips', 'cases', 'deaths', 'roll_cases_pcap']]
+
+df_out.to_csv('./data/rolling-14-day-sum.csv', index=False)
 
