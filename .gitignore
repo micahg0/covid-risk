@@ -3,3 +3,5 @@ start-site.sh
 Gemfile
 Gemfile.lock
 _site
+.ipynb_checkpoints
+.vscode

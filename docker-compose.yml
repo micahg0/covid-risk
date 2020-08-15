@@ -1,0 +1,11 @@
+version: '3.4'
+services:
+  base:
+    build: 
+      context: .
+      target: base
+  dev:
+    build:
+      context: .
+      target: dev
+
