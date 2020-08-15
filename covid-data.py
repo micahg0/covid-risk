@@ -125,6 +125,7 @@ df_roll = df[['fips', 'new_cases', 'new_deaths']].groupby('fips')[['new_cases', 
 
 
 df_roll.rename(columns={'new_cases':'roll_cases', 'new_deaths':'roll_deaths'}, inplace=True)
+df_roll.drop('fips', axis=1, inplace=True)
 df = pd.concat([df, df_roll], axis=1)
 
 df['cases_min'] = 2*df['roll_cases']
@@ -146,3 +147,4 @@ df_out = df[['date', 'label', 'county', 'state', 'fips', 'cases', 'deaths', 'rol
 
 df_out.to_csv('./data/rolling-14-day-sum.csv', index=False)
 
+# df_out.to_json('./data/rdolling-14-day-sum.json', orient='records')

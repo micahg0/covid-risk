@@ -1,12 +1,14 @@
 import altair as alt
 import pandas as pd
+from altair import datum
+
 fips_of_interest = [53033, 53, 0]
 # fips_of_interest = [38105, 38, 0]
 
 df = pd.read_csv('./data/rolling-14-day-sum.csv')
 
 data = df[df['fips'].isin(fips_of_interest)]
-
+data = 'https://raw.githubusercontent.com/micahg0/covid-risk/make-csv/data/rolling-14-day-sum.csv'
 line_county = alt.Chart(data, height=250, width=250).mark_line().encode(
     x='date:T',
     y=alt.Y(
@@ -19,6 +21,8 @@ line_county = alt.Chart(data, height=250, width=250).mark_line().encode(
         'label:N',
         title='Region',
     ),
+).transform_filter(
+    (datum.fips == 53033)
 ).interactive()
 
 
